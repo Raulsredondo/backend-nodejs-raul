@@ -40,6 +40,8 @@ app.get('/', (req, res, next) => {
 // ==========================================
 app.get('/:id', (req, res) => {
 
+    var id = req.params.id;
+    
     Medico.findById(id, (err, medico) => {
 
                 if (err) {

@@ -15,7 +15,7 @@ app.get('/', (req, res, next) => {
 
     Hospital.find({}, 'nombre email img role')
         .exec(
-            (err, hospitals) => {
+            (err, hospitales) => {
 
                 if (err) {
                     return res.status(500).json({
@@ -27,7 +27,7 @@ app.get('/', (req, res, next) => {
 
                 res.status(200).json({
                     ok: true,
-                    hospitals: hospitals
+                    hospitales: hospitales
                 });
 
 
@@ -39,6 +39,8 @@ app.get('/', (req, res, next) => {
 // Obtener un hospital concreto
 // ==========================================
 app.get('/:id', (req, res) => {
+
+    var id = req.params.id;
 
     Hospital.findById(id, (err, hospital) => {
 

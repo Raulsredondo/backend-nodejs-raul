@@ -38,7 +38,9 @@ app.get('/', (req, res, next) => {
 // ==========================================
 // Obtener un usuario concreto
 // ==========================================
-app.get('/', (req, res) => {
+app.get('/:id', (req, res) => {
+
+    var id = req.params.id;
 
     Usuario.findById(id, (err, usuario) => {
 

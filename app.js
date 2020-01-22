@@ -38,13 +38,19 @@ var imagenesRoutes = require('./routes/imagenes');
 
 
 // Rutas
-app.use('/api/usuario', usuarioRoutes);
-app.use('/api/login', loginRoutes);
-app.use('/api/', appRoutes);
-app.use('/api/hospital', hospitalRoutes);
-app.use('/api/medico', medicoRoutes);
+app.use('/', appRoutes);
+app.use('/login', loginRoutes);
+app.use('/usuario', usuarioRoutes);
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/img', imagenesRoutes);
+
+
+
+
+
+
 
 
 // Escuchar peticiones
