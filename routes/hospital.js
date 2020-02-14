@@ -7,13 +7,14 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 var app = express();
 
 var Hospital = require('../models/hospital');
+var Medico = require('../models/medico');
 
 // ==========================================
 // Obtener todos los hospitales
 // ==========================================
 app.get('/', (req, res, next) => {
 
-    Hospital.find({}, 'nombre email img role')
+    Hospital.find({}, 'nombre img usuario')
         .exec(
             (err, hospitales) => {
 
@@ -26,8 +27,9 @@ app.get('/', (req, res, next) => {
                 }
 
                 res.status(200).json({
-                    ok: true,
-                    hospitales: hospitales
+                     
+                    hospitales
+
                 });
 
 
@@ -60,10 +62,7 @@ app.get('/:id', (req, res) => {
                     });
                 }
 
-                res.status(200).json({
-                    ok: true,
-                    hospital: hospital
-                });
+                res.send(hospital)
 
 
 
@@ -166,7 +165,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 // ============================================
 //   Borrar un hospital por el id
 // ============================================
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id',  (req, res) => {
 
     var id = req.params.id;
 
@@ -179,6 +178,8 @@ app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
                 errors: err
             });
         }
+  
+ 
 
         if (!hospitalBorrado) {
             return res.status(400).json({

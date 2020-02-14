@@ -3,6 +3,8 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var fs = require('fs');
+var path = require('path');
 
 // Inicializar variables
 var app = express();
@@ -21,6 +23,15 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res) =
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(express.static('../uploads'));
+// Configurar cabeceras y cors
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});
 
 //Setings
 app.use(morgan('dev'));
@@ -45,10 +56,6 @@ app.use('/hospital', hospitalRoutes);
 app.use('/medico', medicoRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/img', imagenesRoutes);
-
-
-
-
 
 
 

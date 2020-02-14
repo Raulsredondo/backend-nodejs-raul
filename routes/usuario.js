@@ -26,8 +26,8 @@ app.get('/', (req, res, next) => {
                 }
 
                 res.status(200).json({
-                    ok: true,
-                    usuarios: usuarios
+                    
+                     usuarios
                 });
 
 
@@ -60,10 +60,7 @@ app.get('/:id', (req, res) => {
                     });
                 }
 
-                res.status(200).json({
-                    ok: true,
-                    usuario: usuario
-                });
+                res.send(usuario);
 
 
 
