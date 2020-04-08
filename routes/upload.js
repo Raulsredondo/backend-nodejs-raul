@@ -19,6 +19,7 @@ app.use(fileUpload());
 
 app.put('/:tipo/:id', (req, res, next) => {
 
+    console.log(req)
     var tipo = req.params.tipo;
     var id = req.params.id;
 

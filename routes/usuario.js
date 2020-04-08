@@ -99,6 +99,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
         usuario.nombre = body.nombre;
         usuario.email = body.email;
         usuario.role = body.role;
+        usuario.img = body.img;
 
         usuario.save((err, usuarioGuardado) => {
 
@@ -139,6 +140,11 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
         img: body.img,
         role: body.role
     });
+
+    if (req.file) {
+        const { filename } = req.file
+        usuario.setImg(filename)
+    }
 
     usuario.save((err, usuarioGuardado) => {
 

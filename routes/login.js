@@ -46,7 +46,12 @@ app.post('/', (req, res) => {
             ok: true,
             usuario: usuarioDB,
             token: token,
-            id: usuarioDB._id
+            id: usuarioDB._id,  
+            role: usuarioDB.role,
+            nombre: usuarioDB.nombre,
+            email: usuarioDB.email,
+            password: usuarioDB.password,
+            img: usuarioDB.img
         });
 
     })

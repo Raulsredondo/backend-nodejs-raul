@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 app.use(morgan('dev'));
 app.set('port', process.env.PORT || 3000)
 
+app.use('/public', express.static(`${__dirname}/storage/imgs`))
+
 // Importar rutas
 var appRoutes = require('./routes/app'); 
 var usuarioRoutes = require('./routes/usuario');
