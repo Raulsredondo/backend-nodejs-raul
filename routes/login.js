@@ -1,6 +1,7 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var CryptoJS  =require('crypto-js');
 
 var SEED = require('../config/config').SEED;
 
@@ -10,6 +11,10 @@ var Usuario = require('../models/usuario');
 app.post('/', (req, res) => {
 
     var body = req.body;
+    var desencriptado1 = CryptoJS.AES.decrypt(body.password, body.email);
+
+    var desencriptado2 = CryptoJS.enc.Utf8.stringify(desencriptado1).toString();
+    
 
     Usuario.findOne({ email: body.email }, (err, usuarioDB) => {
 
@@ -29,10 +34,10 @@ app.post('/', (req, res) => {
             });
         }
 
-        if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
-            return res.status(400).json({
+        if (!bcrypt.compareSync(desencriptado2, usuarioDB.password)) {
+            return res.status(401).json({
                 ok: false,
-                mensaje: 'Credenciales incorrectas - password',
+                mensaje: desencriptado2 + body.email,
                 errors: err
             });
         }

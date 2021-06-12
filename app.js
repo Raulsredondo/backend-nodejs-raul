@@ -11,7 +11,8 @@ var app = express();
 
 
 // Conexión a la base de datos
-mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res) => {
+
+mongoose.connection.openUri('mongodb://localhost:27017/peluqueriaDB', (err, res) => {
 
     if (err) throw err;
 
@@ -42,22 +43,24 @@ app.use('/public', express.static(`${__dirname}/storage/imgs`))
 // Importar rutas
 var appRoutes = require('./routes/app'); 
 var usuarioRoutes = require('./routes/usuario');
+var registroRoutes = require('./routes/registro');
 var loginRoutes = require('./routes/login');
-var hospitalRoutes = require('./routes/hospital');
-var medicoRoutes = require('./routes/medico');
 var uploadRoutes = require('./routes/upload');
 var imagenesRoutes = require('./routes/imagenes');
+var eventoRoutes = require('./routes/evento');
+var imagenRoutes = require('./routes/imagen');
 
 
 
 // Rutas
 app.use('/', appRoutes);
 app.use('/login', loginRoutes);
+app.use('/registro', registroRoutes);
+app.use('/evento', eventoRoutes);
 app.use('/usuario', usuarioRoutes);
-app.use('/hospital', hospitalRoutes);
-app.use('/medico', medicoRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/img', imagenesRoutes);
+app.use('/imagenes', imagenRoutes);
 
 
 

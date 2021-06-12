@@ -7,8 +7,7 @@ var fs = require('fs');
 var app = express();
 
 var Usuario = require('../models/usuario');
-var Medico = require('../models/medico');
-var Hospital = require('../models/hospital');
+
 
 
 // default options
@@ -44,6 +43,7 @@ app.put('/:tipo/:id', (req, res, next) => {
 
     // Obtener nombre del archivo
     var archivo = req.files.imagen;
+    console.log(req.files.imagen)
     var nombreCortado = archivo.name.split('.');
     var extensionArchivo = nombreCortado[nombreCortado.length - 1];
 
@@ -111,10 +111,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
 
             var pathViejo = './uploads/usuarios/' + usuario.img;
 
-            // Si existe, elimina la imagen anterior
-            if (fs.existsSync(pathViejo)) {
-                fs.unlink(pathViejo);
-            }
+        
 
             usuario.img = nombreArchivo;
 

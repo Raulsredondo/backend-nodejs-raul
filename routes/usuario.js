@@ -11,7 +11,7 @@ var Usuario = require('../models/usuario');
 // ==========================================
 // Obtener todos los usuarios
 // ==========================================
-app.get('/', (req, res, next) => {
+app.get('/', mdAutenticacion.verificaToken, (req, res, next) => {
 
     Usuario.find({}, 'nombre email img role')
         .exec(
@@ -38,7 +38,7 @@ app.get('/', (req, res, next) => {
 // ==========================================
 // Obtener un usuario concreto
 // ==========================================
-app.get('/:id', (req, res) => {
+app.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
 
@@ -71,10 +71,13 @@ app.get('/:id', (req, res) => {
 // ==========================================
 // Actualizar usuario
 // ==========================================
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id',  mdAutenticacion.verificaToken, (req, res) => {
+
+    
 
     var id = req.params.id;
     var body = req.body;
+    console.log(body)
 
     Usuario.findById(id, (err, usuario) => {
 
@@ -95,10 +98,11 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
 
-
+ 
         usuario.nombre = body.nombre;
         usuario.email = body.email;
         usuario.role = body.role;
+        usuario.password = bcrypt.hashSync(body.password, 10);
         usuario.img = body.img;
 
         usuario.save((err, usuarioGuardado) => {
@@ -111,7 +115,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
                 });
             }
 
-            usuarioGuardado.password = ':)';
+            
 
             res.status(200).json({
                 ok: true,
@@ -129,7 +133,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ==========================================
 // Crear un nuevo usuario
 // ==========================================
-app.post('/', mdAutenticacion.verificaToken, (req, res) => {
+app.post('/', (req, res) => {
 
     var body = req.body;
 
